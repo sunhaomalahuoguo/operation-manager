@@ -1,0 +1,1248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sumavision.operation.dao.TradeRecordDao" >
+  <resultMap id="BaseResultMap" type="com.sumavision.operation.entities.TradeRecord" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="TRADE_CODE" property="tradeCode" jdbcType="VARCHAR" />
+    <result column="BIZ_TYPE" property="bizType" jdbcType="DECIMAL" />
+    <result column="TRADE_USER" property="tradeUser" jdbcType="VARCHAR" />
+    <result column="TRADE_START_TIME" property="tradeStartTime" jdbcType="DATE" />
+    <result column="TRADE_END_TIME" property="tradeEndTime" jdbcType="DATE" />
+    <result column="FISCAL_DATE" property="fiscalDate" jdbcType="DATE" />
+    <result column="TRADE_SUM" property="tradeSum" jdbcType="DECIMAL" />
+    <result column="TRADE_LOC" property="tradeLoc" jdbcType="VARCHAR" />
+    <result column="TRADE_PROCESS" property="tradeProcess" jdbcType="VARCHAR" />
+    <result column="ORDER_ID" property="orderId" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="DECIMAL" />
+    <result column="FISCAL_STATUS" property="fiscalStatus" jdbcType="DECIMAL" />
+    <result column="CHECK_STATUS" property="checkStatus" jdbcType="DECIMAL" />
+    <result column="MANUAL_ADJUST_STATUS" property="manualAdjustStatus" jdbcType="DECIMAL" />
+    <result column="MANUAL_ADJUST_TIME" property="manualAdjustTime" jdbcType="DATE" />
+    <result column="MANUAL_ADJUST_FISCAL_DATE" property="manualAdjustFiscalDate" jdbcType="DATE" />
+    <result column="ADJUST_LOG_ID" property="adjustLogId" jdbcType="DECIMAL" />
+    <result column="OPERATOR_CODE" property="operatorCode" jdbcType="VARCHAR" />
+    <result column="EXCEPTION_REC" property="exceptionRec" jdbcType="VARCHAR" />
+    <result column="MER_INFO" property="merInfo" jdbcType="VARCHAR" />
+    <result column="LAST_EDIT_TIME" property="lastEditTime" jdbcType="DATE" />
+    <result column="LAST_EDITOR" property="lastEditor" jdbcType="VARCHAR" />
+    <result column="LAST_EDIT_PROCESS" property="lastEditProcess" jdbcType="VARCHAR" />
+    <result column="VERIFY_CODE" property="verifyCode" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_ID" property="accountId" jdbcType="VARCHAR" />
+    <result column="PROVIDER_ID" property="providerId" jdbcType="VARCHAR" />
+    <result column="BANK_CODE" property="bankCode" jdbcType="VARCHAR" />
+    <result column="BANK_ACCOUNT" property="bankAccount" jdbcType="VARCHAR" />
+    <result column="BANK_SN" property="bankSn" jdbcType="VARCHAR" />
+    <result column="USER_ID" property="userId" jdbcType="DECIMAL" />
+    <result column="DEST_USER_ID" property="destUserId" jdbcType="DECIMAL" />
+    <result column="DEST_ACCOUNT_ID" property="destAccountId" jdbcType="DECIMAL" />
+    <result column="ACCOUNT_PAY" property="accountPay" jdbcType="DECIMAL" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="TRADE_DESC" property="tradeDesc" jdbcType="VARCHAR" />
+    <result column="TIMEOUT_FLG" property="timeoutFlg" jdbcType="DECIMAL" />
+    <result column="PASS_THROUGH" property="passThrough" jdbcType="VARCHAR" />
+    <result column="IS_REPAY_FLG" property="isRepayFlg" jdbcType="DECIMAL" />
+    <result column="SETTLEMENT_STATUS" property="settlementStatus" jdbcType="DECIMAL" />
+    <result column="REFUND_STATUS" property="refundStatus" jdbcType="DECIMAL" />
+    <result column="FLD1" property="fld1" jdbcType="VARCHAR" />
+    <result column="FLD2" property="fld2" jdbcType="VARCHAR" />
+    <result column="FLD3" property="fld3" jdbcType="VARCHAR" />
+    <result column="FLD4" property="fld4" jdbcType="VARCHAR" />
+    <result column="FLD5" property="fld5" jdbcType="VARCHAR" />
+    <result column="FLD6" property="fld6" jdbcType="VARCHAR" />
+    <result column="FLD7" property="fld7" jdbcType="VARCHAR" />
+    <result column="FLD8" property="fld8" jdbcType="VARCHAR" />
+    <result column="FLD9" property="fld9" jdbcType="VARCHAR" />
+    <result column="FLD10" property="fld10" jdbcType="VARCHAR" />
+    <result column="MER_BIZ_FLD" property="merBizFld" jdbcType="VARCHAR" />
+    <result column="MER_FUND" property="merFund" jdbcType="DECIMAL" />
+    <result column="IS_REALTIME_REFUND" property="isRealtimeRefund" jdbcType="DECIMAL" />
+    <result column="BANK_CARD_TYPE" property="bankCardType" jdbcType="DECIMAL" />
+    <result column="SETTLEMENT_TRADE_ID" property="settlementTradeId" jdbcType="DECIMAL" />
+    <result column="MER_SIGNATURE" property="merSignature" jdbcType="VARCHAR" />
+    <result column="PAY_TYPE" property="payType" jdbcType="DECIMAL" />
+    <result column="FAILURE_INFO" property="failureInfo" jdbcType="VARCHAR" />
+    <result column="CHARGE_TYPE" property="chargeType" jdbcType="DECIMAL" />
+    <result column="TRADE_FEE" property="tradeFee" jdbcType="DECIMAL" />
+    <result column="REQUEST_CHANNEL_TYPE" property="requestChannelType" jdbcType="DECIMAL" />
+    <result column="FEE_CHANNEL_TYPE" property="feeChannelType" jdbcType="DECIMAL" />
+    <result column="BIZ_USER_ID" property="bizUserId" jdbcType="DECIMAL" />
+    <result column="FLD11" property="fld11" jdbcType="VARCHAR" />
+    <result column="FLD12" property="fld12" jdbcType="VARCHAR" />
+    <result column="FLD13" property="fld13" jdbcType="VARCHAR" />
+    <result column="FLD14" property="fld14" jdbcType="VARCHAR" />
+    <result column="FLD15" property="fld15" jdbcType="VARCHAR" />
+    <result column="CHANNEL_REQUEST_ID" property="channelRequestId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      ID, TRADE_CODE, BIZ_TYPE, TRADE_USER, TRADE_START_TIME, TRADE_END_TIME, FISCAL_DATE, 
+      TRADE_SUM, TRADE_LOC, TRADE_PROCESS, ORDER_ID, STATUS, FISCAL_STATUS, CHECK_STATUS, 
+      MANUAL_ADJUST_STATUS, MANUAL_ADJUST_TIME, MANUAL_ADJUST_FISCAL_DATE, ADJUST_LOG_ID, 
+      OPERATOR_CODE, EXCEPTION_REC, MER_INFO, LAST_EDIT_TIME, LAST_EDITOR, LAST_EDIT_PROCESS, 
+      VERIFY_CODE, ACCOUNT_ID, PROVIDER_ID, BANK_CODE, BANK_ACCOUNT, BANK_SN, USER_ID, 
+      DEST_USER_ID, DEST_ACCOUNT_ID, ACCOUNT_PAY, REMARK, TRADE_DESC, TIMEOUT_FLG, PASS_THROUGH, 
+      IS_REPAY_FLG, SETTLEMENT_STATUS, REFUND_STATUS, FLD1, FLD2, FLD3, FLD4, FLD5, FLD6, 
+      FLD7, FLD8, FLD9, FLD10, MER_BIZ_FLD, MER_FUND, IS_REALTIME_REFUND, BANK_CARD_TYPE, 
+      SETTLEMENT_TRADE_ID, MER_SIGNATURE, PAY_TYPE, FAILURE_INFO, CHARGE_TYPE, TRADE_FEE, 
+      REQUEST_CHANNEL_TYPE, FEE_CHANNEL_TYPE, BIZ_USER_ID, FLD11, FLD12, FLD13, FLD14, 
+      FLD15, CHANNEL_REQUEST_ID
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sumavision.operation.entities.TradeRecordQuery" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from TRADE_RECORD
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    ID,TRADE_CODE,BIZ_TYPE,TRADE_USER,TRADE_START_TIME,TRADE_END_TIME,FISCAL_DATE,TRADE_SUM,TRADE_LOC,TRADE_PROCESS,ORDER_ID,STATUS,FISCAL_STATUS,CHECK_STATUS,MANUAL_ADJUST_STATUS,MANUAL_ADJUST_TIME,MANUAL_ADJUST_FISCAL_DATE,ADJUST_LOG_ID,OPERATOR_CODE,EXCEPTION_REC,MER_INFO,LAST_EDIT_TIME,LAST_EDITOR,LAST_EDIT_PROCESS,VERIFY_CODE,ACCOUNT_ID,PROVIDER_ID,BANK_CODE,BANK_ACCOUNT,BANK_SN,USER_ID,DEST_USER_ID,DEST_ACCOUNT_ID,ACCOUNT_PAY,REMARK,TRADE_DESC,TIMEOUT_FLG,PASS_THROUGH,IS_REPAY_FLG,SETTLEMENT_STATUS,REFUND_STATUS,FLD1,FLD2,FLD3,FLD4,FLD5,FLD6,FLD7,FLD8,FLD9,FLD10,MER_BIZ_FLD,MER_FUND,IS_REALTIME_REFUND,BANK_CARD_TYPE,SETTLEMENT_TRADE_ID,MER_SIGNATURE,PAY_TYPE,FAILURE_INFO,CHARGE_TYPE,TRADE_FEE,REQUEST_CHANNEL_TYPE,FEE_CHANNEL_TYPE,BIZ_USER_ID,FLD11,FLD12,FLD13,FLD14,FLD15,CHANNEL_REQUEST_ID
+    from TRADE_RECORD
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from TRADE_RECORD
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sumavision.operation.entities.TradeRecordQuery" >
+    delete from TRADE_RECORD
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sumavision.operation.entities.TradeRecord" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      select SEQ_TRADE_RECORD_ID.NEXTVAL from dual
+    </selectKey>
+    insert into TRADE_RECORD (ID, TRADE_CODE, BIZ_TYPE, 
+      TRADE_USER, TRADE_START_TIME, TRADE_END_TIME, 
+      FISCAL_DATE, TRADE_SUM, TRADE_LOC, 
+      TRADE_PROCESS, ORDER_ID, STATUS, 
+      FISCAL_STATUS, CHECK_STATUS, MANUAL_ADJUST_STATUS, 
+      MANUAL_ADJUST_TIME, MANUAL_ADJUST_FISCAL_DATE, ADJUST_LOG_ID, 
+      OPERATOR_CODE, EXCEPTION_REC, MER_INFO, 
+      LAST_EDIT_TIME, LAST_EDITOR, LAST_EDIT_PROCESS, 
+      VERIFY_CODE, ACCOUNT_ID, PROVIDER_ID, 
+      BANK_CODE, BANK_ACCOUNT, BANK_SN, 
+      USER_ID, DEST_USER_ID, DEST_ACCOUNT_ID, 
+      ACCOUNT_PAY, REMARK, TRADE_DESC, 
+      TIMEOUT_FLG, PASS_THROUGH, IS_REPAY_FLG, 
+      SETTLEMENT_STATUS, REFUND_STATUS, FLD1, 
+      FLD2, FLD3, FLD4, FLD5, 
+      FLD6, FLD7, FLD8, FLD9, 
+      FLD10, MER_BIZ_FLD, MER_FUND, 
+      IS_REALTIME_REFUND, BANK_CARD_TYPE, SETTLEMENT_TRADE_ID, 
+      MER_SIGNATURE, PAY_TYPE, FAILURE_INFO, 
+      CHARGE_TYPE, TRADE_FEE, REQUEST_CHANNEL_TYPE, 
+      FEE_CHANNEL_TYPE, BIZ_USER_ID, FLD11, 
+      FLD12, FLD13, FLD14, 
+      FLD15, CHANNEL_REQUEST_ID)
+    values (#{id,jdbcType=DECIMAL}, #{tradeCode,jdbcType=VARCHAR}, #{bizType,jdbcType=DECIMAL}, 
+      #{tradeUser,jdbcType=VARCHAR}, #{tradeStartTime,jdbcType=DATE}, #{tradeEndTime,jdbcType=DATE}, 
+      #{fiscalDate,jdbcType=DATE}, #{tradeSum,jdbcType=DECIMAL}, #{tradeLoc,jdbcType=VARCHAR}, 
+      #{tradeProcess,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{status,jdbcType=DECIMAL}, 
+      #{fiscalStatus,jdbcType=DECIMAL}, #{checkStatus,jdbcType=DECIMAL}, #{manualAdjustStatus,jdbcType=DECIMAL}, 
+      #{manualAdjustTime,jdbcType=DATE}, #{manualAdjustFiscalDate,jdbcType=DATE}, #{adjustLogId,jdbcType=DECIMAL}, 
+      #{operatorCode,jdbcType=VARCHAR}, #{exceptionRec,jdbcType=VARCHAR}, #{merInfo,jdbcType=VARCHAR}, 
+      #{lastEditTime,jdbcType=DATE}, #{lastEditor,jdbcType=VARCHAR}, #{lastEditProcess,jdbcType=VARCHAR}, 
+      #{verifyCode,jdbcType=VARCHAR}, #{accountId,jdbcType=VARCHAR}, #{providerId,jdbcType=VARCHAR}, 
+      #{bankCode,jdbcType=VARCHAR}, #{bankAccount,jdbcType=VARCHAR}, #{bankSn,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=DECIMAL}, #{destUserId,jdbcType=DECIMAL}, #{destAccountId,jdbcType=DECIMAL}, 
+      #{accountPay,jdbcType=DECIMAL}, #{remark,jdbcType=VARCHAR}, #{tradeDesc,jdbcType=VARCHAR}, 
+      #{timeoutFlg,jdbcType=DECIMAL}, #{passThrough,jdbcType=VARCHAR}, #{isRepayFlg,jdbcType=DECIMAL}, 
+      #{settlementStatus,jdbcType=DECIMAL}, #{refundStatus,jdbcType=DECIMAL}, #{fld1,jdbcType=VARCHAR}, 
+      #{fld2,jdbcType=VARCHAR}, #{fld3,jdbcType=VARCHAR}, #{fld4,jdbcType=VARCHAR}, #{fld5,jdbcType=VARCHAR}, 
+      #{fld6,jdbcType=VARCHAR}, #{fld7,jdbcType=VARCHAR}, #{fld8,jdbcType=VARCHAR}, #{fld9,jdbcType=VARCHAR}, 
+      #{fld10,jdbcType=VARCHAR}, #{merBizFld,jdbcType=VARCHAR}, #{merFund,jdbcType=DECIMAL}, 
+      #{isRealtimeRefund,jdbcType=DECIMAL}, #{bankCardType,jdbcType=DECIMAL}, #{settlementTradeId,jdbcType=DECIMAL}, 
+      #{merSignature,jdbcType=VARCHAR}, #{payType,jdbcType=DECIMAL}, #{failureInfo,jdbcType=VARCHAR}, 
+      #{chargeType,jdbcType=DECIMAL}, #{tradeFee,jdbcType=DECIMAL}, #{requestChannelType,jdbcType=DECIMAL}, 
+      #{feeChannelType,jdbcType=DECIMAL}, #{bizUserId,jdbcType=DECIMAL}, #{fld11,jdbcType=VARCHAR}, 
+      #{fld12,jdbcType=VARCHAR}, #{fld13,jdbcType=VARCHAR}, #{fld14,jdbcType=VARCHAR}, 
+      #{fld15,jdbcType=VARCHAR}, #{channelRequestId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sumavision.operation.entities.TradeRecord" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      select SEQ_TRADE_RECORD_ID.NEXTVAL from dual
+    </selectKey>
+    insert into TRADE_RECORD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="tradeCode != null" >
+        TRADE_CODE,
+      </if>
+      <if test="bizType != null" >
+        BIZ_TYPE,
+      </if>
+      <if test="tradeUser != null" >
+        TRADE_USER,
+      </if>
+      <if test="tradeStartTime != null" >
+        TRADE_START_TIME,
+      </if>
+      <if test="tradeEndTime != null" >
+        TRADE_END_TIME,
+      </if>
+      <if test="fiscalDate != null" >
+        FISCAL_DATE,
+      </if>
+      <if test="tradeSum != null" >
+        TRADE_SUM,
+      </if>
+      <if test="tradeLoc != null" >
+        TRADE_LOC,
+      </if>
+      <if test="tradeProcess != null" >
+        TRADE_PROCESS,
+      </if>
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="fiscalStatus != null" >
+        FISCAL_STATUS,
+      </if>
+      <if test="checkStatus != null" >
+        CHECK_STATUS,
+      </if>
+      <if test="manualAdjustStatus != null" >
+        MANUAL_ADJUST_STATUS,
+      </if>
+      <if test="manualAdjustTime != null" >
+        MANUAL_ADJUST_TIME,
+      </if>
+      <if test="manualAdjustFiscalDate != null" >
+        MANUAL_ADJUST_FISCAL_DATE,
+      </if>
+      <if test="adjustLogId != null" >
+        ADJUST_LOG_ID,
+      </if>
+      <if test="operatorCode != null" >
+        OPERATOR_CODE,
+      </if>
+      <if test="exceptionRec != null" >
+        EXCEPTION_REC,
+      </if>
+      <if test="merInfo != null" >
+        MER_INFO,
+      </if>
+      <if test="lastEditTime != null" >
+        LAST_EDIT_TIME,
+      </if>
+      <if test="lastEditor != null" >
+        LAST_EDITOR,
+      </if>
+      <if test="lastEditProcess != null" >
+        LAST_EDIT_PROCESS,
+      </if>
+      <if test="verifyCode != null" >
+        VERIFY_CODE,
+      </if>
+      <if test="accountId != null" >
+        ACCOUNT_ID,
+      </if>
+      <if test="providerId != null" >
+        PROVIDER_ID,
+      </if>
+      <if test="bankCode != null" >
+        BANK_CODE,
+      </if>
+      <if test="bankAccount != null" >
+        BANK_ACCOUNT,
+      </if>
+      <if test="bankSn != null" >
+        BANK_SN,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="destUserId != null" >
+        DEST_USER_ID,
+      </if>
+      <if test="destAccountId != null" >
+        DEST_ACCOUNT_ID,
+      </if>
+      <if test="accountPay != null" >
+        ACCOUNT_PAY,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="tradeDesc != null" >
+        TRADE_DESC,
+      </if>
+      <if test="timeoutFlg != null" >
+        TIMEOUT_FLG,
+      </if>
+      <if test="passThrough != null" >
+        PASS_THROUGH,
+      </if>
+      <if test="isRepayFlg != null" >
+        IS_REPAY_FLG,
+      </if>
+      <if test="settlementStatus != null" >
+        SETTLEMENT_STATUS,
+      </if>
+      <if test="refundStatus != null" >
+        REFUND_STATUS,
+      </if>
+      <if test="fld1 != null" >
+        FLD1,
+      </if>
+      <if test="fld2 != null" >
+        FLD2,
+      </if>
+      <if test="fld3 != null" >
+        FLD3,
+      </if>
+      <if test="fld4 != null" >
+        FLD4,
+      </if>
+      <if test="fld5 != null" >
+        FLD5,
+      </if>
+      <if test="fld6 != null" >
+        FLD6,
+      </if>
+      <if test="fld7 != null" >
+        FLD7,
+      </if>
+      <if test="fld8 != null" >
+        FLD8,
+      </if>
+      <if test="fld9 != null" >
+        FLD9,
+      </if>
+      <if test="fld10 != null" >
+        FLD10,
+      </if>
+      <if test="merBizFld != null" >
+        MER_BIZ_FLD,
+      </if>
+      <if test="merFund != null" >
+        MER_FUND,
+      </if>
+      <if test="isRealtimeRefund != null" >
+        IS_REALTIME_REFUND,
+      </if>
+      <if test="bankCardType != null" >
+        BANK_CARD_TYPE,
+      </if>
+      <if test="settlementTradeId != null" >
+        SETTLEMENT_TRADE_ID,
+      </if>
+      <if test="merSignature != null" >
+        MER_SIGNATURE,
+      </if>
+      <if test="payType != null" >
+        PAY_TYPE,
+      </if>
+      <if test="failureInfo != null" >
+        FAILURE_INFO,
+      </if>
+      <if test="chargeType != null" >
+        CHARGE_TYPE,
+      </if>
+      <if test="tradeFee != null" >
+        TRADE_FEE,
+      </if>
+      <if test="requestChannelType != null" >
+        REQUEST_CHANNEL_TYPE,
+      </if>
+      <if test="feeChannelType != null" >
+        FEE_CHANNEL_TYPE,
+      </if>
+      <if test="bizUserId != null" >
+        BIZ_USER_ID,
+      </if>
+      <if test="fld11 != null" >
+        FLD11,
+      </if>
+      <if test="fld12 != null" >
+        FLD12,
+      </if>
+      <if test="fld13 != null" >
+        FLD13,
+      </if>
+      <if test="fld14 != null" >
+        FLD14,
+      </if>
+      <if test="fld15 != null" >
+        FLD15,
+      </if>
+      <if test="channelRequestId != null" >
+        CHANNEL_REQUEST_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=DECIMAL},
+      <if test="tradeCode != null" >
+        #{tradeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bizType != null" >
+        #{bizType,jdbcType=DECIMAL},
+      </if>
+      <if test="tradeUser != null" >
+        #{tradeUser,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeStartTime != null" >
+        #{tradeStartTime,jdbcType=DATE},
+      </if>
+      <if test="tradeEndTime != null" >
+        #{tradeEndTime,jdbcType=DATE},
+      </if>
+      <if test="fiscalDate != null" >
+        #{fiscalDate,jdbcType=DATE},
+      </if>
+      <if test="tradeSum != null" >
+        #{tradeSum,jdbcType=DECIMAL},
+      </if>
+      <if test="tradeLoc != null" >
+        #{tradeLoc,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeProcess != null" >
+        #{tradeProcess,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="fiscalStatus != null" >
+        #{fiscalStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="checkStatus != null" >
+        #{checkStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="manualAdjustStatus != null" >
+        #{manualAdjustStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="manualAdjustTime != null" >
+        #{manualAdjustTime,jdbcType=DATE},
+      </if>
+      <if test="manualAdjustFiscalDate != null" >
+        #{manualAdjustFiscalDate,jdbcType=DATE},
+      </if>
+      <if test="adjustLogId != null" >
+        #{adjustLogId,jdbcType=DECIMAL},
+      </if>
+      <if test="operatorCode != null" >
+        #{operatorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="exceptionRec != null" >
+        #{exceptionRec,jdbcType=VARCHAR},
+      </if>
+      <if test="merInfo != null" >
+        #{merInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="lastEditTime != null" >
+        #{lastEditTime,jdbcType=DATE},
+      </if>
+      <if test="lastEditor != null" >
+        #{lastEditor,jdbcType=VARCHAR},
+      </if>
+      <if test="lastEditProcess != null" >
+        #{lastEditProcess,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyCode != null" >
+        #{verifyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null" >
+        #{accountId,jdbcType=VARCHAR},
+      </if>
+      <if test="providerId != null" >
+        #{providerId,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null" >
+        #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null" >
+        #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="bankSn != null" >
+        #{bankSn,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=DECIMAL},
+      </if>
+      <if test="destUserId != null" >
+        #{destUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="destAccountId != null" >
+        #{destAccountId,jdbcType=DECIMAL},
+      </if>
+      <if test="accountPay != null" >
+        #{accountPay,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeDesc != null" >
+        #{tradeDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="timeoutFlg != null" >
+        #{timeoutFlg,jdbcType=DECIMAL},
+      </if>
+      <if test="passThrough != null" >
+        #{passThrough,jdbcType=VARCHAR},
+      </if>
+      <if test="isRepayFlg != null" >
+        #{isRepayFlg,jdbcType=DECIMAL},
+      </if>
+      <if test="settlementStatus != null" >
+        #{settlementStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="refundStatus != null" >
+        #{refundStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="fld1 != null" >
+        #{fld1,jdbcType=VARCHAR},
+      </if>
+      <if test="fld2 != null" >
+        #{fld2,jdbcType=VARCHAR},
+      </if>
+      <if test="fld3 != null" >
+        #{fld3,jdbcType=VARCHAR},
+      </if>
+      <if test="fld4 != null" >
+        #{fld4,jdbcType=VARCHAR},
+      </if>
+      <if test="fld5 != null" >
+        #{fld5,jdbcType=VARCHAR},
+      </if>
+      <if test="fld6 != null" >
+        #{fld6,jdbcType=VARCHAR},
+      </if>
+      <if test="fld7 != null" >
+        #{fld7,jdbcType=VARCHAR},
+      </if>
+      <if test="fld8 != null" >
+        #{fld8,jdbcType=VARCHAR},
+      </if>
+      <if test="fld9 != null" >
+        #{fld9,jdbcType=VARCHAR},
+      </if>
+      <if test="fld10 != null" >
+        #{fld10,jdbcType=VARCHAR},
+      </if>
+      <if test="merBizFld != null" >
+        #{merBizFld,jdbcType=VARCHAR},
+      </if>
+      <if test="merFund != null" >
+        #{merFund,jdbcType=DECIMAL},
+      </if>
+      <if test="isRealtimeRefund != null" >
+        #{isRealtimeRefund,jdbcType=DECIMAL},
+      </if>
+      <if test="bankCardType != null" >
+        #{bankCardType,jdbcType=DECIMAL},
+      </if>
+      <if test="settlementTradeId != null" >
+        #{settlementTradeId,jdbcType=DECIMAL},
+      </if>
+      <if test="merSignature != null" >
+        #{merSignature,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=DECIMAL},
+      </if>
+      <if test="failureInfo != null" >
+        #{failureInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeType != null" >
+        #{chargeType,jdbcType=DECIMAL},
+      </if>
+      <if test="tradeFee != null" >
+        #{tradeFee,jdbcType=DECIMAL},
+      </if>
+      <if test="requestChannelType != null" >
+        #{requestChannelType,jdbcType=DECIMAL},
+      </if>
+      <if test="feeChannelType != null" >
+        #{feeChannelType,jdbcType=DECIMAL},
+      </if>
+      <if test="bizUserId != null" >
+        #{bizUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="fld11 != null" >
+        #{fld11,jdbcType=VARCHAR},
+      </if>
+      <if test="fld12 != null" >
+        #{fld12,jdbcType=VARCHAR},
+      </if>
+      <if test="fld13 != null" >
+        #{fld13,jdbcType=VARCHAR},
+      </if>
+      <if test="fld14 != null" >
+        #{fld14,jdbcType=VARCHAR},
+      </if>
+      <if test="fld15 != null" >
+        #{fld15,jdbcType=VARCHAR},
+      </if>
+      <if test="channelRequestId != null" >
+        #{channelRequestId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sumavision.operation.entities.TradeRecordQuery" resultType="java.lang.Integer" >
+    select count(*) from TRADE_RECORD
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update TRADE_RECORD
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.tradeCode != null" >
+        TRADE_CODE = #{record.tradeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bizType != null" >
+        BIZ_TYPE = #{record.bizType,jdbcType=DECIMAL},
+      </if>
+      <if test="record.tradeUser != null" >
+        TRADE_USER = #{record.tradeUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tradeStartTime != null" >
+        TRADE_START_TIME = #{record.tradeStartTime,jdbcType=DATE},
+      </if>
+      <if test="record.tradeEndTime != null" >
+        TRADE_END_TIME = #{record.tradeEndTime,jdbcType=DATE},
+      </if>
+      <if test="record.fiscalDate != null" >
+        FISCAL_DATE = #{record.fiscalDate,jdbcType=DATE},
+      </if>
+      <if test="record.tradeSum != null" >
+        TRADE_SUM = #{record.tradeSum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.tradeLoc != null" >
+        TRADE_LOC = #{record.tradeLoc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tradeProcess != null" >
+        TRADE_PROCESS = #{record.tradeProcess,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderId != null" >
+        ORDER_ID = #{record.orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=DECIMAL},
+      </if>
+      <if test="record.fiscalStatus != null" >
+        FISCAL_STATUS = #{record.fiscalStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="record.checkStatus != null" >
+        CHECK_STATUS = #{record.checkStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="record.manualAdjustStatus != null" >
+        MANUAL_ADJUST_STATUS = #{record.manualAdjustStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="record.manualAdjustTime != null" >
+        MANUAL_ADJUST_TIME = #{record.manualAdjustTime,jdbcType=DATE},
+      </if>
+      <if test="record.manualAdjustFiscalDate != null" >
+        MANUAL_ADJUST_FISCAL_DATE = #{record.manualAdjustFiscalDate,jdbcType=DATE},
+      </if>
+      <if test="record.adjustLogId != null" >
+        ADJUST_LOG_ID = #{record.adjustLogId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.operatorCode != null" >
+        OPERATOR_CODE = #{record.operatorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exceptionRec != null" >
+        EXCEPTION_REC = #{record.exceptionRec,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merInfo != null" >
+        MER_INFO = #{record.merInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastEditTime != null" >
+        LAST_EDIT_TIME = #{record.lastEditTime,jdbcType=DATE},
+      </if>
+      <if test="record.lastEditor != null" >
+        LAST_EDITOR = #{record.lastEditor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastEditProcess != null" >
+        LAST_EDIT_PROCESS = #{record.lastEditProcess,jdbcType=VARCHAR},
+      </if>
+      <if test="record.verifyCode != null" >
+        VERIFY_CODE = #{record.verifyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountId != null" >
+        ACCOUNT_ID = #{record.accountId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.providerId != null" >
+        PROVIDER_ID = #{record.providerId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankCode != null" >
+        BANK_CODE = #{record.bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankAccount != null" >
+        BANK_ACCOUNT = #{record.bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankSn != null" >
+        BANK_SN = #{record.bankSn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.destUserId != null" >
+        DEST_USER_ID = #{record.destUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.destAccountId != null" >
+        DEST_ACCOUNT_ID = #{record.destAccountId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.accountPay != null" >
+        ACCOUNT_PAY = #{record.accountPay,jdbcType=DECIMAL},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tradeDesc != null" >
+        TRADE_DESC = #{record.tradeDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.timeoutFlg != null" >
+        TIMEOUT_FLG = #{record.timeoutFlg,jdbcType=DECIMAL},
+      </if>
+      <if test="record.passThrough != null" >
+        PASS_THROUGH = #{record.passThrough,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isRepayFlg != null" >
+        IS_REPAY_FLG = #{record.isRepayFlg,jdbcType=DECIMAL},
+      </if>
+      <if test="record.settlementStatus != null" >
+        SETTLEMENT_STATUS = #{record.settlementStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="record.refundStatus != null" >
+        REFUND_STATUS = #{record.refundStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="record.fld1 != null" >
+        FLD1 = #{record.fld1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fld2 != null" >
+        FLD2 = #{record.fld2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fld3 != null" >
+        FLD3 = #{record.fld3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fld4 != null" >
+        FLD4 = #{record.fld4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fld5 != null" >
+        FLD5 = #{record.fld5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fld6 != null" >
+        FLD6 = #{record.fld6,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fld7 != null" >
+        FLD7 = #{record.fld7,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fld8 != null" >
+        FLD8 = #{record.fld8,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fld9 != null" >
+        FLD9 = #{record.fld9,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fld10 != null" >
+        FLD10 = #{record.fld10,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merBizFld != null" >
+        MER_BIZ_FLD = #{record.merBizFld,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merFund != null" >
+        MER_FUND = #{record.merFund,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isRealtimeRefund != null" >
+        IS_REALTIME_REFUND = #{record.isRealtimeRefund,jdbcType=DECIMAL},
+      </if>
+      <if test="record.bankCardType != null" >
+        BANK_CARD_TYPE = #{record.bankCardType,jdbcType=DECIMAL},
+      </if>
+      <if test="record.settlementTradeId != null" >
+        SETTLEMENT_TRADE_ID = #{record.settlementTradeId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.merSignature != null" >
+        MER_SIGNATURE = #{record.merSignature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payType != null" >
+        PAY_TYPE = #{record.payType,jdbcType=DECIMAL},
+      </if>
+      <if test="record.failureInfo != null" >
+        FAILURE_INFO = #{record.failureInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chargeType != null" >
+        CHARGE_TYPE = #{record.chargeType,jdbcType=DECIMAL},
+      </if>
+      <if test="record.tradeFee != null" >
+        TRADE_FEE = #{record.tradeFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.requestChannelType != null" >
+        REQUEST_CHANNEL_TYPE = #{record.requestChannelType,jdbcType=DECIMAL},
+      </if>
+      <if test="record.feeChannelType != null" >
+        FEE_CHANNEL_TYPE = #{record.feeChannelType,jdbcType=DECIMAL},
+      </if>
+      <if test="record.bizUserId != null" >
+        BIZ_USER_ID = #{record.bizUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.fld11 != null" >
+        FLD11 = #{record.fld11,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fld12 != null" >
+        FLD12 = #{record.fld12,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fld13 != null" >
+        FLD13 = #{record.fld13,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fld14 != null" >
+        FLD14 = #{record.fld14,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fld15 != null" >
+        FLD15 = #{record.fld15,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelRequestId != null" >
+        CHANNEL_REQUEST_ID = #{record.channelRequestId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update TRADE_RECORD
+    set ID = #{record.id,jdbcType=DECIMAL},
+      TRADE_CODE = #{record.tradeCode,jdbcType=VARCHAR},
+      BIZ_TYPE = #{record.bizType,jdbcType=DECIMAL},
+      TRADE_USER = #{record.tradeUser,jdbcType=VARCHAR},
+      TRADE_START_TIME = #{record.tradeStartTime,jdbcType=DATE},
+      TRADE_END_TIME = #{record.tradeEndTime,jdbcType=DATE},
+      FISCAL_DATE = #{record.fiscalDate,jdbcType=DATE},
+      TRADE_SUM = #{record.tradeSum,jdbcType=DECIMAL},
+      TRADE_LOC = #{record.tradeLoc,jdbcType=VARCHAR},
+      TRADE_PROCESS = #{record.tradeProcess,jdbcType=VARCHAR},
+      ORDER_ID = #{record.orderId,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=DECIMAL},
+      FISCAL_STATUS = #{record.fiscalStatus,jdbcType=DECIMAL},
+      CHECK_STATUS = #{record.checkStatus,jdbcType=DECIMAL},
+      MANUAL_ADJUST_STATUS = #{record.manualAdjustStatus,jdbcType=DECIMAL},
+      MANUAL_ADJUST_TIME = #{record.manualAdjustTime,jdbcType=DATE},
+      MANUAL_ADJUST_FISCAL_DATE = #{record.manualAdjustFiscalDate,jdbcType=DATE},
+      ADJUST_LOG_ID = #{record.adjustLogId,jdbcType=DECIMAL},
+      OPERATOR_CODE = #{record.operatorCode,jdbcType=VARCHAR},
+      EXCEPTION_REC = #{record.exceptionRec,jdbcType=VARCHAR},
+      MER_INFO = #{record.merInfo,jdbcType=VARCHAR},
+      LAST_EDIT_TIME = #{record.lastEditTime,jdbcType=DATE},
+      LAST_EDITOR = #{record.lastEditor,jdbcType=VARCHAR},
+      LAST_EDIT_PROCESS = #{record.lastEditProcess,jdbcType=VARCHAR},
+      VERIFY_CODE = #{record.verifyCode,jdbcType=VARCHAR},
+      ACCOUNT_ID = #{record.accountId,jdbcType=VARCHAR},
+      PROVIDER_ID = #{record.providerId,jdbcType=VARCHAR},
+      BANK_CODE = #{record.bankCode,jdbcType=VARCHAR},
+      BANK_ACCOUNT = #{record.bankAccount,jdbcType=VARCHAR},
+      BANK_SN = #{record.bankSn,jdbcType=VARCHAR},
+      USER_ID = #{record.userId,jdbcType=DECIMAL},
+      DEST_USER_ID = #{record.destUserId,jdbcType=DECIMAL},
+      DEST_ACCOUNT_ID = #{record.destAccountId,jdbcType=DECIMAL},
+      ACCOUNT_PAY = #{record.accountPay,jdbcType=DECIMAL},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      TRADE_DESC = #{record.tradeDesc,jdbcType=VARCHAR},
+      TIMEOUT_FLG = #{record.timeoutFlg,jdbcType=DECIMAL},
+      PASS_THROUGH = #{record.passThrough,jdbcType=VARCHAR},
+      IS_REPAY_FLG = #{record.isRepayFlg,jdbcType=DECIMAL},
+      SETTLEMENT_STATUS = #{record.settlementStatus,jdbcType=DECIMAL},
+      REFUND_STATUS = #{record.refundStatus,jdbcType=DECIMAL},
+      FLD1 = #{record.fld1,jdbcType=VARCHAR},
+      FLD2 = #{record.fld2,jdbcType=VARCHAR},
+      FLD3 = #{record.fld3,jdbcType=VARCHAR},
+      FLD4 = #{record.fld4,jdbcType=VARCHAR},
+      FLD5 = #{record.fld5,jdbcType=VARCHAR},
+      FLD6 = #{record.fld6,jdbcType=VARCHAR},
+      FLD7 = #{record.fld7,jdbcType=VARCHAR},
+      FLD8 = #{record.fld8,jdbcType=VARCHAR},
+      FLD9 = #{record.fld9,jdbcType=VARCHAR},
+      FLD10 = #{record.fld10,jdbcType=VARCHAR},
+      MER_BIZ_FLD = #{record.merBizFld,jdbcType=VARCHAR},
+      MER_FUND = #{record.merFund,jdbcType=DECIMAL},
+      IS_REALTIME_REFUND = #{record.isRealtimeRefund,jdbcType=DECIMAL},
+      BANK_CARD_TYPE = #{record.bankCardType,jdbcType=DECIMAL},
+      SETTLEMENT_TRADE_ID = #{record.settlementTradeId,jdbcType=DECIMAL},
+      MER_SIGNATURE = #{record.merSignature,jdbcType=VARCHAR},
+      PAY_TYPE = #{record.payType,jdbcType=DECIMAL},
+      FAILURE_INFO = #{record.failureInfo,jdbcType=VARCHAR},
+      CHARGE_TYPE = #{record.chargeType,jdbcType=DECIMAL},
+      TRADE_FEE = #{record.tradeFee,jdbcType=DECIMAL},
+      REQUEST_CHANNEL_TYPE = #{record.requestChannelType,jdbcType=DECIMAL},
+      FEE_CHANNEL_TYPE = #{record.feeChannelType,jdbcType=DECIMAL},
+      BIZ_USER_ID = #{record.bizUserId,jdbcType=DECIMAL},
+      FLD11 = #{record.fld11,jdbcType=VARCHAR},
+      FLD12 = #{record.fld12,jdbcType=VARCHAR},
+      FLD13 = #{record.fld13,jdbcType=VARCHAR},
+      FLD14 = #{record.fld14,jdbcType=VARCHAR},
+      FLD15 = #{record.fld15,jdbcType=VARCHAR},
+      CHANNEL_REQUEST_ID = #{record.channelRequestId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sumavision.operation.entities.TradeRecord" >
+    update TRADE_RECORD
+    <set >
+      <if test="tradeCode != null" >
+        TRADE_CODE = #{tradeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bizType != null" >
+        BIZ_TYPE = #{bizType,jdbcType=DECIMAL},
+      </if>
+      <if test="tradeUser != null" >
+        TRADE_USER = #{tradeUser,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeStartTime != null" >
+        TRADE_START_TIME = #{tradeStartTime,jdbcType=DATE},
+      </if>
+      <if test="tradeEndTime != null" >
+        TRADE_END_TIME = #{tradeEndTime,jdbcType=DATE},
+      </if>
+      <if test="fiscalDate != null" >
+        FISCAL_DATE = #{fiscalDate,jdbcType=DATE},
+      </if>
+      <if test="tradeSum != null" >
+        TRADE_SUM = #{tradeSum,jdbcType=DECIMAL},
+      </if>
+      <if test="tradeLoc != null" >
+        TRADE_LOC = #{tradeLoc,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeProcess != null" >
+        TRADE_PROCESS = #{tradeProcess,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        ORDER_ID = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="fiscalStatus != null" >
+        FISCAL_STATUS = #{fiscalStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="checkStatus != null" >
+        CHECK_STATUS = #{checkStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="manualAdjustStatus != null" >
+        MANUAL_ADJUST_STATUS = #{manualAdjustStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="manualAdjustTime != null" >
+        MANUAL_ADJUST_TIME = #{manualAdjustTime,jdbcType=DATE},
+      </if>
+      <if test="manualAdjustFiscalDate != null" >
+        MANUAL_ADJUST_FISCAL_DATE = #{manualAdjustFiscalDate,jdbcType=DATE},
+      </if>
+      <if test="adjustLogId != null" >
+        ADJUST_LOG_ID = #{adjustLogId,jdbcType=DECIMAL},
+      </if>
+      <if test="operatorCode != null" >
+        OPERATOR_CODE = #{operatorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="exceptionRec != null" >
+        EXCEPTION_REC = #{exceptionRec,jdbcType=VARCHAR},
+      </if>
+      <if test="merInfo != null" >
+        MER_INFO = #{merInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="lastEditTime != null" >
+        LAST_EDIT_TIME = #{lastEditTime,jdbcType=DATE},
+      </if>
+      <if test="lastEditor != null" >
+        LAST_EDITOR = #{lastEditor,jdbcType=VARCHAR},
+      </if>
+      <if test="lastEditProcess != null" >
+        LAST_EDIT_PROCESS = #{lastEditProcess,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyCode != null" >
+        VERIFY_CODE = #{verifyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null" >
+        ACCOUNT_ID = #{accountId,jdbcType=VARCHAR},
+      </if>
+      <if test="providerId != null" >
+        PROVIDER_ID = #{providerId,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null" >
+        BANK_CODE = #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null" >
+        BANK_ACCOUNT = #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="bankSn != null" >
+        BANK_SN = #{bankSn,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=DECIMAL},
+      </if>
+      <if test="destUserId != null" >
+        DEST_USER_ID = #{destUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="destAccountId != null" >
+        DEST_ACCOUNT_ID = #{destAccountId,jdbcType=DECIMAL},
+      </if>
+      <if test="accountPay != null" >
+        ACCOUNT_PAY = #{accountPay,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeDesc != null" >
+        TRADE_DESC = #{tradeDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="timeoutFlg != null" >
+        TIMEOUT_FLG = #{timeoutFlg,jdbcType=DECIMAL},
+      </if>
+      <if test="passThrough != null" >
+        PASS_THROUGH = #{passThrough,jdbcType=VARCHAR},
+      </if>
+      <if test="isRepayFlg != null" >
+        IS_REPAY_FLG = #{isRepayFlg,jdbcType=DECIMAL},
+      </if>
+      <if test="settlementStatus != null" >
+        SETTLEMENT_STATUS = #{settlementStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="refundStatus != null" >
+        REFUND_STATUS = #{refundStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="fld1 != null" >
+        FLD1 = #{fld1,jdbcType=VARCHAR},
+      </if>
+      <if test="fld2 != null" >
+        FLD2 = #{fld2,jdbcType=VARCHAR},
+      </if>
+      <if test="fld3 != null" >
+        FLD3 = #{fld3,jdbcType=VARCHAR},
+      </if>
+      <if test="fld4 != null" >
+        FLD4 = #{fld4,jdbcType=VARCHAR},
+      </if>
+      <if test="fld5 != null" >
+        FLD5 = #{fld5,jdbcType=VARCHAR},
+      </if>
+      <if test="fld6 != null" >
+        FLD6 = #{fld6,jdbcType=VARCHAR},
+      </if>
+      <if test="fld7 != null" >
+        FLD7 = #{fld7,jdbcType=VARCHAR},
+      </if>
+      <if test="fld8 != null" >
+        FLD8 = #{fld8,jdbcType=VARCHAR},
+      </if>
+      <if test="fld9 != null" >
+        FLD9 = #{fld9,jdbcType=VARCHAR},
+      </if>
+      <if test="fld10 != null" >
+        FLD10 = #{fld10,jdbcType=VARCHAR},
+      </if>
+      <if test="merBizFld != null" >
+        MER_BIZ_FLD = #{merBizFld,jdbcType=VARCHAR},
+      </if>
+      <if test="merFund != null" >
+        MER_FUND = #{merFund,jdbcType=DECIMAL},
+      </if>
+      <if test="isRealtimeRefund != null" >
+        IS_REALTIME_REFUND = #{isRealtimeRefund,jdbcType=DECIMAL},
+      </if>
+      <if test="bankCardType != null" >
+        BANK_CARD_TYPE = #{bankCardType,jdbcType=DECIMAL},
+      </if>
+      <if test="settlementTradeId != null" >
+        SETTLEMENT_TRADE_ID = #{settlementTradeId,jdbcType=DECIMAL},
+      </if>
+      <if test="merSignature != null" >
+        MER_SIGNATURE = #{merSignature,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        PAY_TYPE = #{payType,jdbcType=DECIMAL},
+      </if>
+      <if test="failureInfo != null" >
+        FAILURE_INFO = #{failureInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeType != null" >
+        CHARGE_TYPE = #{chargeType,jdbcType=DECIMAL},
+      </if>
+      <if test="tradeFee != null" >
+        TRADE_FEE = #{tradeFee,jdbcType=DECIMAL},
+      </if>
+      <if test="requestChannelType != null" >
+        REQUEST_CHANNEL_TYPE = #{requestChannelType,jdbcType=DECIMAL},
+      </if>
+      <if test="feeChannelType != null" >
+        FEE_CHANNEL_TYPE = #{feeChannelType,jdbcType=DECIMAL},
+      </if>
+      <if test="bizUserId != null" >
+        BIZ_USER_ID = #{bizUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="fld11 != null" >
+        FLD11 = #{fld11,jdbcType=VARCHAR},
+      </if>
+      <if test="fld12 != null" >
+        FLD12 = #{fld12,jdbcType=VARCHAR},
+      </if>
+      <if test="fld13 != null" >
+        FLD13 = #{fld13,jdbcType=VARCHAR},
+      </if>
+      <if test="fld14 != null" >
+        FLD14 = #{fld14,jdbcType=VARCHAR},
+      </if>
+      <if test="fld15 != null" >
+        FLD15 = #{fld15,jdbcType=VARCHAR},
+      </if>
+      <if test="channelRequestId != null" >
+        CHANNEL_REQUEST_ID = #{channelRequestId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sumavision.operation.entities.TradeRecord" >
+    update TRADE_RECORD
+    set TRADE_CODE = #{tradeCode,jdbcType=VARCHAR},
+      BIZ_TYPE = #{bizType,jdbcType=DECIMAL},
+      TRADE_USER = #{tradeUser,jdbcType=VARCHAR},
+      TRADE_START_TIME = #{tradeStartTime,jdbcType=DATE},
+      TRADE_END_TIME = #{tradeEndTime,jdbcType=DATE},
+      FISCAL_DATE = #{fiscalDate,jdbcType=DATE},
+      TRADE_SUM = #{tradeSum,jdbcType=DECIMAL},
+      TRADE_LOC = #{tradeLoc,jdbcType=VARCHAR},
+      TRADE_PROCESS = #{tradeProcess,jdbcType=VARCHAR},
+      ORDER_ID = #{orderId,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=DECIMAL},
+      FISCAL_STATUS = #{fiscalStatus,jdbcType=DECIMAL},
+      CHECK_STATUS = #{checkStatus,jdbcType=DECIMAL},
+      MANUAL_ADJUST_STATUS = #{manualAdjustStatus,jdbcType=DECIMAL},
+      MANUAL_ADJUST_TIME = #{manualAdjustTime,jdbcType=DATE},
+      MANUAL_ADJUST_FISCAL_DATE = #{manualAdjustFiscalDate,jdbcType=DATE},
+      ADJUST_LOG_ID = #{adjustLogId,jdbcType=DECIMAL},
+      OPERATOR_CODE = #{operatorCode,jdbcType=VARCHAR},
+      EXCEPTION_REC = #{exceptionRec,jdbcType=VARCHAR},
+      MER_INFO = #{merInfo,jdbcType=VARCHAR},
+      LAST_EDIT_TIME = #{lastEditTime,jdbcType=DATE},
+      LAST_EDITOR = #{lastEditor,jdbcType=VARCHAR},
+      LAST_EDIT_PROCESS = #{lastEditProcess,jdbcType=VARCHAR},
+      VERIFY_CODE = #{verifyCode,jdbcType=VARCHAR},
+      ACCOUNT_ID = #{accountId,jdbcType=VARCHAR},
+      PROVIDER_ID = #{providerId,jdbcType=VARCHAR},
+      BANK_CODE = #{bankCode,jdbcType=VARCHAR},
+      BANK_ACCOUNT = #{bankAccount,jdbcType=VARCHAR},
+      BANK_SN = #{bankSn,jdbcType=VARCHAR},
+      USER_ID = #{userId,jdbcType=DECIMAL},
+      DEST_USER_ID = #{destUserId,jdbcType=DECIMAL},
+      DEST_ACCOUNT_ID = #{destAccountId,jdbcType=DECIMAL},
+      ACCOUNT_PAY = #{accountPay,jdbcType=DECIMAL},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      TRADE_DESC = #{tradeDesc,jdbcType=VARCHAR},
+      TIMEOUT_FLG = #{timeoutFlg,jdbcType=DECIMAL},
+      PASS_THROUGH = #{passThrough,jdbcType=VARCHAR},
+      IS_REPAY_FLG = #{isRepayFlg,jdbcType=DECIMAL},
+      SETTLEMENT_STATUS = #{settlementStatus,jdbcType=DECIMAL},
+      REFUND_STATUS = #{refundStatus,jdbcType=DECIMAL},
+      FLD1 = #{fld1,jdbcType=VARCHAR},
+      FLD2 = #{fld2,jdbcType=VARCHAR},
+      FLD3 = #{fld3,jdbcType=VARCHAR},
+      FLD4 = #{fld4,jdbcType=VARCHAR},
+      FLD5 = #{fld5,jdbcType=VARCHAR},
+      FLD6 = #{fld6,jdbcType=VARCHAR},
+      FLD7 = #{fld7,jdbcType=VARCHAR},
+      FLD8 = #{fld8,jdbcType=VARCHAR},
+      FLD9 = #{fld9,jdbcType=VARCHAR},
+      FLD10 = #{fld10,jdbcType=VARCHAR},
+      MER_BIZ_FLD = #{merBizFld,jdbcType=VARCHAR},
+      MER_FUND = #{merFund,jdbcType=DECIMAL},
+      IS_REALTIME_REFUND = #{isRealtimeRefund,jdbcType=DECIMAL},
+      BANK_CARD_TYPE = #{bankCardType,jdbcType=DECIMAL},
+      SETTLEMENT_TRADE_ID = #{settlementTradeId,jdbcType=DECIMAL},
+      MER_SIGNATURE = #{merSignature,jdbcType=VARCHAR},
+      PAY_TYPE = #{payType,jdbcType=DECIMAL},
+      FAILURE_INFO = #{failureInfo,jdbcType=VARCHAR},
+      CHARGE_TYPE = #{chargeType,jdbcType=DECIMAL},
+      TRADE_FEE = #{tradeFee,jdbcType=DECIMAL},
+      REQUEST_CHANNEL_TYPE = #{requestChannelType,jdbcType=DECIMAL},
+      FEE_CHANNEL_TYPE = #{feeChannelType,jdbcType=DECIMAL},
+      BIZ_USER_ID = #{bizUserId,jdbcType=DECIMAL},
+      FLD11 = #{fld11,jdbcType=VARCHAR},
+      FLD12 = #{fld12,jdbcType=VARCHAR},
+      FLD13 = #{fld13,jdbcType=VARCHAR},
+      FLD14 = #{fld14,jdbcType=VARCHAR},
+      FLD15 = #{fld15,jdbcType=VARCHAR},
+      CHANNEL_REQUEST_ID = #{channelRequestId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

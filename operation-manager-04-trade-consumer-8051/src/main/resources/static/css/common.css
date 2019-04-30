@@ -1,0 +1,395 @@
+html,body {
+	padding: 0px;
+	margin: 0px;
+	background-color: #F9F9F9;
+	font-family: Verdana, Arial,Vrinda,Tahoma;
+	line-height: 175%;
+	font-size:12px;
+	color:#000;
+	SCROLLBAR-FACE-COLOR: #eef6f9;
+	SCROLLBAR-HIGHLIGHT-COLOR: #d8eff8;
+	SCROLLBAR-SHADOW-COLOR: #8aadce;
+	SCROLLBAR-3DLIGHT-COLOR: #d8eff8;
+	SCROLLBAR-ARROW-COLOR: #8aadce;
+	SCROLLBAR-TRACK-COLOR: #eef6f9;
+	SCROLLBAR-DARKSHADOW-COLOR: #d8eff8;
+	SCROLLBAR-BASE-COLOR: #eef6f9;
+	overflow: auto;
+	overflow-x:hidden;
+}
+
+
+/*定义字体样式*/
+
+
+#body_dh a{       /*操作页面导航链接样式*/
+	color:#000000;
+	text-decoration:none;
+}
+#body_dh a:hover{   /*操作页面导航链接样式*/
+	color:#FFFFFF;
+	cursor:hand;
+}
+a {             /*全局链接样式*/
+	color: #73938E;
+	text-decoration:none;
+}
+a:hover {
+	color: #0099CC;
+}
+.left_title {          /*题标样式:纵向*/
+	background-image:url(../images/body_title_bg.gif);
+	background-color: #d2dfef;
+	color:#000;
+	/*font-weight:bold;*/
+	text-align:right
+}
+.left_title_1 {          /*题标样式:纵向*/
+	background-color: #d2dfee;
+	color:#73938E;
+	font-weight:bold;
+	line-height:30px;
+	text-align:right
+}
+.left_title_2 {          /*题标样式：横向*/
+	background-image:url(../images/body_title_bg.gif);
+	color:#73938E;
+	font-weight:bold;
+	line-height:25px;
+	text-align:center;
+}
+.left_title_3 {          /*题标样式:纵向*/
+	color:#73938E;
+	font-weight:bold;
+	font-size:16px;
+	text-align:center;
+}
+.right_title {          /*题标样式：横向*/
+	background-image:url(../images/body_title_bg.gif);
+	color:#73938E;
+	font-weight:bold;
+	line-height:25px;
+	text-align:right;
+}
+.left_title_3 {          /*题标样式：横向*/
+	background-image:url(../images/body_title_bg2.gif);
+	color:#73938E;
+	font-weight:bold;
+	line-height:50px;
+	text-align:center;
+}
+.redSign{   /*提示标记*/
+	color:#FF0000;
+}
+.wrong_red{   /*提示标记*/
+	color:#FF0000;
+}
+.graySign{   /*提示标记*/
+	color:gray;
+}
+
+/*文本框样式*/
+
+
+.text_contant{            /*卡号，用户账号*/
+	border:1px solid #8aadce;
+	width:150px;
+	height:16px;
+}
+.text_file{
+	border:1px solid #8aadce;
+	width:300px;
+	height:20px;
+}
+.text_date{
+	background-image:url(../images/calendar.gif);
+	background-repeat:no-repeat;
+	background-position: right;
+	border:1px solid #8aadce;
+	width:100px;
+	height:16px;
+}
+.pageNum{      /*页码*/
+    border:1px solid #8aadce;
+	width:18px;
+	height:14px;
+	text-align:center
+}
+.remarkarea{    /*备注*/
+	border:1px solid #8aadce;
+	width:80%;
+	height:60px;
+}
+.text_money{    /*备注*/
+	border:1px solid #8aadce;
+	width:80px;
+	height:14px;
+}
+
+
+/*层样式*/
+
+.edit_area{             /*可见编辑区域的层*/
+	margin:5px;
+	border:0px solid #87add0;
+	overflow: auto;
+	text-align:center;
+	padding:0px;
+}
+.chose_area{             /*填写和选择*/
+	margin:5px 5px 2px 5px;
+	overflow: auto;
+	text-align:center;
+}
+.caozuo_area{             /*填写和选择*/
+	margin:5px 5px 2px 5px;
+	overflow: auto;
+	text-align:center;
+}
+.show_page{    /*分页图层*/
+	margin:0px;
+	overflow: auto;
+	text-align:center;
+	padding:0px;
+}
+.smallPic{   /*小电脑图标*/
+	margin-left:10px;
+	float:left;
+}
+.body_title_word{  /*小电脑图标右边文字*/
+	line-height:21px;
+	vertical-align:middle;
+	float:left;
+	margin-left:5px;
+	font-weight:bold;
+}
+
+/*表格样式*/
+.showTable{          /*可见编辑区域的表格*/
+	background-color:#87add0;
+}
+.showTableTd{   /*列表非特殊单元格*/
+    background-color:#FFFFFF;
+}
+.showTableTd2{   /*非列表非特殊单元格*/
+    background-color:#F9F9F9;
+}
+
+.body_title{    /*当前操作标题*/
+	height:31px;
+	background-image:url(../images/body_title_bg.gif);
+}
+.smallTitleArea{  /*小标题单元格*/
+	height:25px;
+	background-image:url(../images/small_title_bg.gif);
+	text-align:left;
+}
+.smallTitleTd_focus{   /*小标题（当前操作区域）*/
+	background-image:url(../images/body_title_focus.gif);
+	text-align:center;
+	line-height:25px;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+.smallTitleTd{    /*小标题  非当前操作区域*/
+	background-image:url(../images/body_title_tab.gif);
+	text-align:center;
+	line-height:25px;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+/*按钮样式*/
+.button2{           /*两个文字的按钮*/
+	width:60px;
+	height:24px;
+	background-image:url(../images/button2_bg.jpg);
+	background-color:#FFFFFF;
+	border:0px;
+	line-height:24px;
+	color:#FFFFFF;
+	font-weight:bold;
+}
+.button4{           /*四个文字的按钮*/
+	width:80px;
+	height:24px;
+	background-image:url(../images/button4_bg.jpg);
+	background-color:#FFFFFF;
+	border:0px;
+	line-height:24px;
+	color:#FFFFFF;
+	font-weight:bold;
+}
+		.button5{           /*五个文字的按钮*/
+			width:100px;
+			height:24px;
+			background-image:url(../images/button5_bg.jpg);
+			background-color:#FFFFFF;
+			border:0px;
+			line-height:24px;
+			color:#FFFFFF;
+			font-weight:bold;
+		}
+/*图片*/
+img{
+border:0px;
+}
+
+.sp{
+	color:red;
+}
+
+.jQuery_select_div{
+	position:absolute;
+	border:1px solid gray;
+	font-size:12px;
+	background-color:#FFF;
+	scrollbar-face-color:#eef6f9;
+	scrollbar-highlight-color:#d8eff8;
+	scrollbar-shadow-color:#d8eff8;
+	scrollbar-3dlight-color:#d8eff8;
+	scrollbar-arrow-color:#7fbfe5;
+	scrollbar-track-color:#eef6f9;
+	scrollbar-darkshadow-color:#48486c;
+	scrollbar-base-color:#eef6f9;
+	height: 220;
+	overflow-y:auto;
+}
+
+.jQuery_select_text{
+	height:16;
+	font-size:12;
+	border:1px solid #87add0;
+	border-right-style:none;
+	cursor:hand;
+}
+
+.verify_error{
+	background-color: salmon;
+}
+.verify_normal{
+	background-color:#FFF;
+}
+.txt_changed{
+	background-color: gainsboro;
+}
+.tr_block{display: block;};
+.tr_none{display: none;};
+
+.clip{text-overflow:ellipsis; white-space:nowrap; overflow:hidden;}
+.noResult{
+	background-color:#FFFFFF;
+	text-align: center;
+}
+
+/* 标签栏样式 */
+.tabStyle{
+	width:116px;
+	height:22px;
+	position:absolute;
+	margin-left:3px;
+	margin-top:2px;
+	background:url(../images/tab.gif);
+	float:left;
+	line-height:22px;
+	cursor: pointer;
+}
+
+.tabFocusStyle{
+	width:116px;
+	height:22px;
+	position:absolute;
+	margin-left:3px;
+	margin-top:2px;
+	background:url(../images/tab_focus.gif);
+	float:left;
+	line-height:22px;
+	cursor: pointer;
+	color: #FFF;
+	z-index: 5;
+}
+
+.tabTd{
+	height:27px;
+	background:url(../images/dh_table.gif);
+	text-align:left;
+	background-position: bottom;
+}
+
+/* 标签栏样式 */
+#loading{
+	background:url(../images/loading.gif);
+	left:expression(documentElement.clientWidth/2 - 70);
+	top:expression(documentElement.clientHeight/2 - 56);
+	z-index:101;
+	background-repeat:no-repeat;
+	position:absolute;
+	height:32px;
+	padding-left:40px;
+	line-height:32px;
+}
+
+#mask{
+	position:absolute;
+	top:0;
+	left:0;
+	width:expression(documentElement.clientWidth);
+	height:expression(documentElement.clientHeight);
+	background:#EEE;
+	filter:ALPHA(opacity=80);
+	z-index:100;
+	visibility:visible;
+}
+
+/********************自定义消息提示框样式***********************/
+.msgDivMain{
+	position:absolute;
+	left:expression(documentElement.clientWidth/2 - 180);
+	top:expression(documentElement.clientHeight/2 - 150);
+	width:250px;
+	height:150px;
+	border-right:1px solid #D4D0C8;
+	border-bottom:1px solid #D4D0C8;
+	display: none;
+	z-index:102;
+}
+.msgDivFrm{
+	height:100%;
+	width:100%;
+	text-align:center;
+	border-top:1px solid #999999;
+	border-left:1px solid #999999;
+	border-right:1px solid #808080;
+	border-bottom:1px solid #808080;
+	FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#F3F3F3,endColorStr=#CBCBCB);
+}
+.msgDivBody{
+	width:220px;
+	height:100px;
+	text-align:left;
+	background-color:#A2D8FF;
+    border:1px solid #333333;
+    color:#003380;
+    line-height:14px;
+    FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#A0D7FF,endColorStr=#A9E0FF);
+    padding:5px;
+
+}
+.msgText{
+	cursor:move;
+	width:100%;
+	text-align:left;
+	padding:3px;
+	height:22px;
+	font-family:Arial;
+	font-weight:bold;
+	FILTER: progid:DXImageTransform.Microsoft.DropShadow(color=#ffffff,offX=1,offY=1,positives=true);
+}
+.msgClose{
+	cursor:pointer;
+	font-family:Arial;
+	FILTER: progid:DXImageTransform.Microsoft.DropShadow(color=#ffffff,offX=1,offY=1,positives=true);
+	height:15px;
+}
+/********************自定义消息提示框样式***********************/

@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" th:href="@{/css/common.css}" type="text/css" />
+<link rel="stylesheet" type="text/css" th:href="@{/themes/default/easyui.css}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/themes/icon.css}"/>
+<link rel="stylesheet" th:href="@{/css/calendar-style.css}"
+	type="text/css" />
+<script type="text/javascript" language="JavaScript" th:src="@{/js/calendar.js}"></script>
+<script type="text/javascript" language="JavaScript" th:src="@{/js/calendar-cn.js}"></script>
+<script type="text/javascript" language="JavaScript" th:src="@{/js/calendar-setup.js}"></script>
+<script type="text/javascript" language="JavaScript" th:src="@{/js/common.js}"></script>
+<script type="text/javascript" language="JavaScript" th:src="@{/js/jquery-1.7.1.js}"></script>
+<script type="text/javascript" th:src="@{/js/suma-init.js}"></script>
+<script language="javascript" th:src="@{/js/global.js}"></script>
+<script type="text/javascript" language="JavaScript" th:src="@{/js/jquery.blockUI.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.easyui-1.2.5.js}"></script>
+<script type="text/javascript" th:src="@{/js/combobox_extend.js}"></script>
+<title>交易查询</title>
+<script language="javascript">
+	/* load date contral */
+	window.onload = function() {
+		dateLoad([ 'beginTime', 'endTime' , 'tradeEndTimeStart', 'tradeEndTimeEnd']);
+		modSize('aTbl');
+		var inputText = '${inputText}';
+		if(inputText!=null && inputText!=''){
+			jQuery('#merchantIdSelect').combobox('setValue', '${inputText}'); 
+		}
+		
+	};
+	//var s=
+/*<%=request.getAttribute("s")%>*/
+	;
+
+	function queryDetail() {
+		var merchantId = jQuery('#merchantIdSelect').combobox('getValue');
+		var inputText = jQuery('#merchantIdSelect').combobox('getText');
+
+		if(merchantId !=null && merchantId!=""){
+			  jQuery('#merchantId').val(merchantId);
+			  jQuery('#inputText').val("");
+		  }else if(inputText !=null && inputText!=""){
+			  jQuery('#merchantId').val("");
+			  jQuery('#inputText').val(inputText);
+		  }else{
+			  jQuery('#merchantId').val("");
+			  jQuery('#inputText').val("");
+	       }
+		checkSelect();
+		var fundThan = document.TradeQueryActionForm.fundStart.value;
+		var fundLess = document.TradeQueryActionForm.fundEnd.value;
+		if (parseFloat(fundThan) > parseFloat(fundLess)) {
+			alert("交易最大金额应不低于交易最小金额!");
+			return;
+		}
+		var beginTime = document.getElementById("beginTime").value;
+		var endTime = document.getElementById("endTime").value;
+		var tradeEndTimeStart = document.getElementById("tradeEndTimeStart").value;
+		var tradeEndTimeEnd = document.getElementById("tradeEndTimeEnd").value;
+		if (beginTime.trim() != "" && endTime.trim() != "") {
+			if (comDate(beginTime.trim(), endTime.trim()) == 1) {
+				alert("交易开始时间段的结束时间不得早于开始时间!");
+				return;
+			}
+		}
+		if (tradeEndTimeStart.trim() != "" && tradeEndTimeEnd.trim() != "") {
+			if (comDate(tradeEndTimeStart.trim(), tradeEndTimeEnd.trim()) == 1) {
+				alert("交易结束时间段的结束时间不得早于开始时间!");
+				return;
+			}
+		}
+		document.TradeQueryActionForm.action = "tradeQueryAction_query";
+		document.TradeQueryActionForm.submit();
+		return;
+	}
+
+	function toDetail(id) {
+		document.TradeQueryActionForm.action = "tradeQueryAction_detail&id="
+				+ id;
+		document.TradeQueryActionForm.submit();
+	}
+
+	function toModify(id) {
+		document.TradeQueryActionForm.action = "tradeQueryAction_method=toModify&id="
+				+ id;
+		document.TradeQueryActionForm.submit();
+	}
+	function modalPanel() {
+		jQuery.blockUI({
+			message : jQuery('#messagebox'),
+			//默认定义消息框样式Css样式
+			css : {
+				top : (jQuery(window).height() - 320) / 2 + 'px',
+				left : (jQuery(window).width() - 400) / 2 + 'px',
+				width : '360px',
+				height : '320px',
+				color : '#222',
+				border : '#6593cf 2px solid',
+				backgroundColor : '#fff',
+				cursor : 'wait'
+			},
+			// 遮罩样式
+			overlayCSS : {
+				backgroundColor : '#4d4d4d', //类似easyui颜色
+				opacity : 0.6
+			//透明度
+			},
+			// 遮罩层的Z-Index值，越大越在上面
+			baseZ : 5000,
+			// 是否居中
+			centerX : true,
+			centerY : true,
+			//是否允许拉大 
+			//短的网页上。禁用如果你想防止车身高度的变化
+			allowBodyStretch : true,
+			//遮罩时是否禁用键盘和鼠标事件
+			bindEvents : true
+		});
+	}
+	function excel() {
+		var merchantId = jQuery('#merchantIdSelect').combobox('getValue');
+		var inputText = jQuery('#merchantIdSelect').combobox('getText');
+		if(merchantId !=null && merchantId!=""){
+			  jQuery('#merchantId').val(merchantId);
+			  jQuery('#inputText').val("");
+		  }else if(inputText !=null && inputText!=""){
+			  jQuery('#merchantId').val("");
+			  jQuery('#inputText').val(inputText);
+		  }else{
+			  jQuery('#merchantId').val("");
+			  jQuery('#inputText').val("");
+	      }
+		checkSelect();
+		loading();
+		document.TradeQueryActionForm.action = "tradeQueryAction_excel";
+		document.TradeQueryActionForm.submit();
+		document.TradeQueryActionForm.action = "tradeQueryAction_list";
+		excelCallback();
+		return;
+	}
+	function excel(num, before, allpages) {
+		var merchantId = jQuery('#merchantIdSelect').combobox('getValue');
+		var inputText = jQuery('#merchantIdSelect').combobox('getText');
+		if(merchantId !=null && merchantId!=""){
+			  jQuery('#merchantId').val(merchantId);
+			  jQuery('#inputText').val("");
+		  }else if(inputText !=null && inputText!=""){
+			  jQuery('#merchantId').val("");
+			  jQuery('#inputText').val(inputText);
+		  }else{
+			  jQuery('#merchantId').val("");
+			  jQuery('#inputText').val("");
+	       }
+		checkSelect();
+		var merchantId1 = jQuery('#merchantId').val();
+		var inputText1 = jQuery('#inputText').val();
+		var orderId = jQuery('#orderId').val();
+		var fundStart = jQuery('#fundStart').val();
+		var fundEnd = jQuery('#fundEnd').val();
+		var bankSn = jQuery('#bankSn').val();		
+		var requestChannelType = jQuery('#requestChannelType').combobox('getValue');
+		var feeChannelType = jQuery('#feeChannelType').combobox('getValue');
+		var bankCode = jQuery('#bankCode').combobox('getValue');
+		var fld3 = jQuery('#fld3').combobox('getValue');
+		var repayFlg = jQuery('#repayFlg').combobox('getValue');
+		var merchantUserIdentity = jQuery('#merchantUserIdentity').val();
+		var operatorCode = jQuery('#operatorCode').combobox('getValue');
+		var tradeId = jQuery('#tradeId').val();
+		var tradeType = jQuery('#tradeType').combobox('getValue');
+		var status = jQuery('#status').combobox('getValue');
+		var beginTime = jQuery('#beginTime').val();
+		var endTime = jQuery('#endTime').val();
+		var ktimeStart = jQuery('#ktimeStart').val();
+		var ktimeEnd = jQuery('#ktimeEnd').val();
+		var tradeEndTimeStart = jQuery('#tradeEndTimeStart').val();
+		var tradeEndTimeEnd = jQuery('#tradeEndTimeEnd').val();
+		var jtimeStart = jQuery('#jtimeStart').val();
+		var jtimeEnd = jQuery('#jtimeEnd').val();
+		var bizType = jQuery('#bizType').combobox('getValue');
+		var chargeType = jQuery('#chargeType').combobox('getValue');
+		var fld12 = jQuery('#fld12').combobox('getValue');
+		var total = allpages;
+		var excelStr = "tradeQueryAction_excel";
+		if (total == 0) {
+			jQuery.post('tradeQueryAction_excelCount', {
+				'fundStart' : fundStart,
+				'fundEnd' : fundEnd,
+				'requestChannelType' : requestChannelType,
+				'feeChannelType' : feeChannelType,
+				'bankCode' : bankCode,
+				'repayFlg' : repayFlg,
+				'merchantUserIdentity' : merchantUserIdentity,
+				'merchantId' : merchantId1,
+				'orderId' : orderId,
+				'inputText' : inputText1,
+				'bankSn' : bankSn,
+				'operatorCode' : operatorCode,
+				'tradeId' : tradeId,
+				'tradeType' : tradeType,
+				'status' : status,
+				'beginTime' : beginTime,
+				'endTime' : endTime,
+				'ktimeStart' : ktimeStart,
+				'ktimeEnd' : ktimeEnd,
+				'tradeEndTimeStart' : tradeEndTimeStart,
+				'tradeEndTimeEnd' : tradeEndTimeEnd,
+				'jtimeStart' : jtimeStart,
+				'jtimeEnd' : jtimeEnd,
+				'bizType' : bizType,
+				'chargeType':chargeType,
+				'fld12': fld12,
+				'fld3': fld3
+			}, function(data) {
+				if(inputText1!=null && inputText1!=''){
+					jQuery('#merchantIdSelect').combobox('setValue', inputText1); 
+				}
+				total = data;
+				excelStr += "?total=" + total + "&count=";
+				if (total == 1) {
+					excelStr += 0;
+					location.href = excelStr;
+				} else {
+					openBlock(num, before, total, excelStr);
+				}
+			});
+		} else {
+			if(inputText1!=null && inputText1!=''){
+				jQuery('#merchantIdSelect').combobox('setValue', inputText1); 
+			}
+			excelStr += "?total=" + total + "&count=";
+			openBlock(num, before, total, excelStr);
+		}
+	}
+
+	function openBlock(num, before, total, excelStr) {
+		if (total == 0 || total == "") {
+			alert("导出文件记录数不能为空！");
+		} else {
+			var htmlStr = '';
+			htmlStr += '<table>';
+			if (total <= 10) {
+				for ( var i = 0; i < total; i++) {
+					htmlStr += '<tr><td style="width:400px;" align="center">'
+							+ '<span>交易列表'
+							+ (i + 1)
+							+ '</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="'+excelStr+i+'" style="color: #277E9B;">下载</a></td></tr>';
+				}
+				htmlStr += '<tr align="center"><td style="width:400px;" align="center"><a href="#" onclick="cancelBlock()" style="color: #277E9B;">关闭</a></td></tr>';
+			} else {
+				var pages = Math.ceil(total / 10);
+				var excelFiles = total;
+				var allbits = 1;
+				while ((excelFiles = Math.floor(excelFiles / 10)) != 0) {
+					allbits++;
+				}
+				for ( var i = 10 * num; i < total; i++) {
+					if (i == 10 * (num + 1)) {
+						break;
+					}
+					var countbits = 1;
+					var temp = i + 1;
+					while ((temp = Math.floor(temp / 10)) != 0) {
+						countbits++;
+					}
+					var name = "";
+					for ( var k = 0; k < allbits - countbits; k++) {
+						name += "0";
+					}
+					name += (i + 1);
+					htmlStr += '<tr><td style="width:400px;" align="center">'
+							+ '<span>交易列表'
+							+ name
+							+ '</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="'+excelStr+i+'" style="color: #277E9B;">下载</a></td></tr>';
+				}
+				htmlStr += '<tr><td></td></tr>';
+				if (num == 0) {
+					htmlStr += '<tr align="center"><td style="width:400px;" align="center">'
+							+ '<span>上一页</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"  onclick="excel('
+							+ (num + 1)
+							+ ','
+							+ num
+							+ ','
+							+ total
+							+ ')" style="color: #277E9B;">下一页</a>'
+							+ '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>第'
+							+ (num + 1) + '/' + pages + '页</span></td></tr>';
+				} else if (10 * (num + 1) >= total) {
+					htmlStr += '<tr align="center"><td style="width:400px;" align="center">'
+							+ '<a href="#"  onclick="excel('
+							+ (num - 1)
+							+ ','
+							+ num
+							+ ','
+							+ total
+							+ ')" style="color: #277E9B;">上一页</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>下一页</span>'
+							+ '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>第'
+							+ (num + 1) + '/' + pages + '页</span></td></tr>';
+				} else {
+					htmlStr += '<tr align="center"><td style="width:400px;" align="center">'
+							+ '<a href="#"  onclick="excel('
+							+ (num - 1)
+							+ ','
+							+ num
+							+ ','
+							+ total
+							+ ')" style="color: #277E9B;">上一页</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"  onclick="excel('
+							+ (num + 1)
+							+ ','
+							+ num
+							+ ','
+							+ total
+							+ ')" style="color: #277E9B;">下一页</a>'
+							+ '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>第'
+							+ (num + 1) + '/' + pages + '页</span></td></tr>';
+				}
+				htmlStr += '<tr align="center"><td style="width:400px;" align="center"><a href="#" onclick="cancelBlock()" style="color: #277E9B;">关闭</a></td></tr>';
+			}
+			htmlStr += '</table>';
+			if (num == 0 && before == 0) {
+				modalPanel();
+			}
+			jQuery('#messagebox').empty();
+			jQuery('#messagebox').append(htmlStr);
+		}
+	}
+
+	function cancelBlock() {
+		jQuery.unblockUI();
+		//jQuery(".blockUI").fadeOut("slow");  //解决IE下关闭不了的问题
+	}
+
+</script>
+</head>
+<body>
+	<form name="TradeQueryActionForm"
+		th:action="tradeQueryAction_list" th:method="post">
+		<!--<s:token />-->
+		<input type="hidden" id="s" name="s" value="${s }" />
+
+		<table style="width: 100%" id="aTbl">
+			<tr>
+				<td>
+					<table width="100%" cellspacing="1" cellpadding="3"
+						class="showTable">
+						<tr>
+							<td width="8%" class="left_title" align="right">商户:</td>
+							<td class="showTableTd" width="14%" align="left">
+								<select class="easyui-combobox" id="merchantIdSelect" style="width:150px;">
+			                   		<option value=""></option>
+									<!--<c:forEach items="${listMerchant}" var="m">
+										<option <c:if test="${merchantId eq m.id}">selected</c:if> value="${m.id}">${m.merchantName}-${m.merchantCode}</option>
+									</c:forEach>-->
+								</select>
+								<input type="hidden" name="inputText" id="inputText"/>
+								<input type="hidden" name="merchantId" id="merchantId"/>     
+						    </td>
+							<td width="8%" class="left_title" align="right">第三方用户标识</td>
+							<td class="showTableTd" width="14%"><input type="text"
+								class="text_contant" id="merchantUserIdentity" name="merchantUserIdentity" maxlength="50"
+								value="${merchantUserIdentity}" /></td>
+							<td width="9%" class="left_title" align="right">交易编号:</td>
+							<td class="showTableTd" width="14%"><input type="text"
+								class="text_contant" id="tradeId" name="tradeId" maxlength="18"
+								onblur="javascript:cp(this);" value="${tradeId}" /></td>
+							
+							<td width="9%" class="left_title" align="right">商户请求编号:</td>
+							<td class="showTableTd" width="14%"><input type="text"
+								class="text_contant" id="orderId" name="orderId" maxlength="40" value="${orderId}" />
+							</td>
+							
+							<td class="showTableTd"  rowspan="6" align="center" width="12%">
+								<a href="#" onclick="moreSearch(this)">
+								<!--	<c:if test="${s ne '1' }">
+										<fmt:message key="common.quickSearch" />
+									</c:if> <c:if test="${s eq '1' }">
+										<fmt:message key="common.moreSearch" />
+									</c:if> -->
+								</a> <input name="button" type="button" class="button2"
+								onclick="queryDetail()"
+								onmouseover="this.style.backgroundImage='url(${request_path}/images/button2_bg_focus.jpg)'"
+								onmouseout="this.style.backgroundImage='url(${request_path}/images/button2_bg.jpg)'"
+								value="查询" />
+							</td>
+						</tr>
+						<tr id="dynamic_2">table-row
+						<!--<c:if test="${s eq '1' }">none</c:if>">-->
+							<td class="left_title" align="right">请求渠道类型:</td>
+							<td class="showTableTd">
+								<select class="easyui-combobox" id="requestChannelType" name="requestChannelType" style="width:150px;">
+									<option value=""></option>
+								<!--	<option <c:if test="${0 eq requestChannelType}">selected</c:if> value="0">默认</option>
+									<option <c:if test="${1 eq requestChannelType}">selected</c:if> value="1">移动端</option>
+									<option <c:if test="${2 eq requestChannelType}">selected</c:if> value="2">PC端</option>
+									<option <c:if test="${3 eq requestChannelType}">selected</c:if> value="3">电视端</option>-->
+							</select></td>
+							<td class="left_title" align="right">实用渠道类型:</td>
+							<td class="showTableTd">
+								<select class="easyui-combobox" id="feeChannelType" name="feeChannelType" style="width:150px;">
+									<option value=""></option>
+									<!--<option <c:if test="${0 eq feeChannelType}">selected</c:if> value="0">默认</option>
+									<option <c:if test="${1 eq feeChannelType}">selected</c:if> value="1">移动端</option>
+									<option <c:if test="${2 eq feeChannelType}">selected</c:if> value="2">PC端</option>
+									<option <c:if test="${3 eq feeChannelType}">selected</c:if> value="3">电视端</option>-->
+							</select></td>
+							<td class="left_title" align="right">手续费收取方式:</td>						
+							<td class="showTableTd" >	
+								<select class="easyui-combobox" id="chargeType" name="chargeType" style="width:150px;" panelheight="auto">
+									<option value=""></option>							
+									<!--<option <c:if test="${chargeType eq 0}">selected</c:if> value="0">实时</option>
+									<option <c:if test="${chargeType eq 1}">selected</c:if> value="1">预付</option>
+									<option <c:if test="${chargeType eq 2}">selected</c:if> value="2">垫付</option>
+									<option <c:if test="${chargeType eq 3}">selected</c:if> value="3">后付</option>-->
+								</select>
+							</td>
+							<td class="left_title" align="right">交易金额:</td>
+							<td class="showTableTd" colspan="2" ><input type="text"
+								class="text_money" id="fundStart" name="fundStart"
+								value="${fundStart}" onblur="cm(this);" /> - <input type="text"
+								class="text_money" id="fundEnd" name="fundEnd"
+								value="${fundEnd}" onblur="cm(this);" /></td>
+						</tr>
+						<tr>
+							<td class="left_title" align="right" width="8%" >交易开始时间段:</td>
+							<td class="showTableTd" width="25%" colspan="3" >开始日期：<input type="text" onblur="cd(this)"
+								class="text_date" name="beginTime" id="beginTime" size="25"
+								value="${beginTime}" /> - 时间：(hhmmss)<input type="text"  id="ktimeStart" name="ktimeStart"  class="text_contant" value="${ktimeStart}"/>
+							</td>
+							<td align="left" class="showTableTd" colspan="4"><div align="left">
+            	  				终止日期：<input type="text" onblur="cd(this)"
+								class="text_date" name="endTime" id="endTime" size="25"
+								value="${endTime}" />
+								&nbsp;-&nbsp;时间：(hhmmss)
+		   						<input type="text"  id="ktimeEnd" name="ktimeEnd" class="text_contant" value="${ktimeEnd}"/></div>
+		   					</td>
+							</tr>
+							<tr>
+							<td class="left_title" align="right" width="8%" >交易结束时间段:</td>
+							<td class="showTableTd" width="25%" colspan="3" >开始日期：<input type="text" onblur="cd(this)"
+								class="text_date" name="tradeEndTimeStart" id="tradeEndTimeStart" size="25"
+								value="${tradeEndTimeStart}" /> - 时间：(hhmmss)<input type="text"  id="jtimeStart" name="jtimeStart"  class="text_contant" value="${jtimeStart}"/>
+							</td>
+							<td align="left" class="showTableTd" colspan="4"><div align="left">
+								终止日期：<input type="text" onblur="cd(this)"
+								class="text_date" name="tradeEndTimeEnd" id="tradeEndTimeEnd" size="25"
+								value="${tradeEndTimeEnd}" />
+            	  				&nbsp;-&nbsp;时间：(hhmmss)
+		   						<input type="text"  id="jtimeEnd" name="jtimeEnd" class="text_contant" value="${jtimeEnd}"/></div>
+		   					</td>
+							
+						</tr>
+						<tr>
+							<td class="left_title" align="right">交易类型:</td>
+							<td class="showTableTd">
+								<select class="easyui-combobox" id="tradeType" name="tradeType" style="width:150px;">
+									<option value=""></option>
+									<!--<c:forEach items="${listTradeType}" var="trade" step="1"
+										varStatus="var">
+										<option value="${trade.code}"<c:if test="${trade.code eq tradeType}">selected</c:if> >${trade.name}</option>
+									</c:forEach>-->
+							</select></td>
+							<td class="left_title" align="right">渠道:</td>
+							<td class="showTableTd">
+								<select class="easyui-combobox" id="bankCode" name="bankCode" style="width:150px;">
+									<option value=""></option>
+									<!--<c:forEach items="${listBank}" var="item" step="1"
+										varStatus="var">
+										<option value="${item.bankCode}"<c:if test="${item.bankCode eq bankCode}">selected</c:if>>${item.bankName}</option>
+									</c:forEach>-->
+							</select></td>
+							
+							<td class="left_title" align="right">行业:</td>
+							<td class="showTableTd" width="15%">
+								<select class="easyui-combobox" id="bizType" name="bizType" style="width:120px;">
+									<option value=""></option>
+									<!--<c:forEach items="${listBizType}" var="item" step="1"
+										varStatus="var">
+										<option value="${item.id}"<c:if test="${item.id eq bizType}">selected</c:if>>${item.name}</option>
+									</c:forEach>-->
+							</select></td>
+							<td width="8%" class="left_title" align="right">银行票号:</td>
+								<td class="showTableTd" width="15%"><input type="text"
+								class="text_contant" id="bankSn" name="bankSn" maxlength="40" value="${bankSn}" /></td>
+							
+
+						</tr>
+						<tr>
+								<td width="8%" class="left_title" align="right" >商户类型:</td>
+								<td class="showTableTd" width="13%">
+								<select class="easyui-combobox" id="fld12" name="fld12" style="width:150px;" panelheight="auto">
+									<option value=""></option>
+									<!--<option <c:if test="${0 eq fld12}">selected</c:if> value="0">普通商户</option>
+									<option <c:if test="${1 eq fld12}">selected</c:if> value="1">P2P托管商户</option>
+									<option <c:if test="${2 eq fld12}">selected</c:if> value="2">徽商存管商户</option>
+									<option <c:if test="${3 eq fld12}">selected</c:if> value="3">账户托管商户</option>
+									<option <c:if test="${4 eq fld12}">selected</c:if> value="4">晋城存管商户</option>
+									<option <c:if test="${5 eq fld12}">selected</c:if> value="5">众邦存管商户</option>-->
+								</select>
+								</td>
+								<td width="8%" class="left_title" align="right">企业用户名:</td>
+								<td class="showTableTd" width="25%" >
+								<select class="easyui-combobox" id="repayFlg" name="repayFlg" style="width:150px;" panelheight="auto">
+									<option value=""></option>
+									<!--<c:forEach items="${listBusinessUser}" var="u">
+										<option <c:if test="${repayFlg eq u.id}">selected</c:if> value="${u.id}">${u.name}</option>
+									</c:forEach>-->
+								</select>
+							</td>
+								<td class="left_title" align="right">支付状态:</td>
+								<td class="showTableTd" width="13%">
+								<select class="easyui-combobox" id="status" name="status" style="width:150px;" panelheight="auto">
+									<option value=""></option>
+									<!--<option <c:if test="${0 eq status}">selected</c:if> value="0">待处理</option>
+									<option <c:if test="${1 eq status}">selected</c:if> value="1">处理中</option>
+									<option <c:if test="${2 eq status}">selected</c:if> value="2">成功</option>
+									<option <c:if test="${3 eq status}">selected</c:if> value="3">失败</option>
+									<option <c:if test="${4 eq status}">selected</c:if> value="4">待确认</option>-->
+								</select>
+							</td>
+							<td class="left_title" align="right">银行:</td>
+							<td class="showTableTd">
+								<select class="easyui-combobox" id="fld3" name="fld3" style="width:150px;">
+									<option value=""></option>
+									<!--<c:forEach items="${listBank}" var="item" step="1"
+										varStatus="var">
+										<option value="${item.bankCode}"<c:if test="${item.bankCode eq fld3}">selected</c:if>>${item.bankName}</option>
+									</c:forEach>-->
+							</select></td>
+								
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td style="padding-top: 10px;">
+					<div style="width: auto; float: left">
+						<a style="display: ${init_flg}" href="#" onclick="excel(0,0,0)"
+							onmouseout="MM_swapImgRestore()"
+							onmouseover="MM_swapImage('Image02','','${request_path}/images/dc_excel_focus.gif',1)">
+							<img th:src="@{/images/dc_excel.gif}" name="Image02"
+							width="65" height="21" border="0" id="Image02" align="middle" />
+						</a>
+					</div>
+					<div style="width:auto; float:right;display: ${init_flg}">
+					</div></td>
+			</tr>
+			<tr style="display: ${init_flg}">
+				<td>
+					<table cellpadding="2" cellspacing="1" class="showTable"
+						style="width: 100%; table-layout: fixed;">
+						<colgroup style="background-color: #FFF" />
+						<colgroup style="background-color: #FFF" />
+						<colgroup style="background-color: #FFF" />
+						<colgroup style="background-color: #FFF" />
+						<colgroup style="background-color: #FFF" />
+						<colgroup style="background-color: #FFF" />
+						<colgroup style="background-color: #FFF" />
+						<colgroup style="background-color: #FFF" />
+						<colgroup style="background-color: #FFF" />
+						<tr>
+							<td class="left_title_2" width="6%"><div align="center">商户编码</div></td>
+							<td class="left_title_2" width="9%"><div align="center">商户名称</div></td>
+							<td class="left_title_2" width="8%"><div align="center">行业</div>
+							</td>
+							<td class="left_title_2" width="12%"><div align="center">请求编号</div>
+							</td>
+							<td class="left_title_2" width="6%"><div align="center">银行票号</div>
+							</td>
+							<td class="left_title_2" width="6%"><div align="center">交易类型</div>
+							</td>
+							<td class="left_title_2" width="6%"><div align="center">银行渠道</div>
+							</td>
+							<td class="left_title_2" width="6%"><div align="center">交易金额</div>
+							</td>
+							<td class="left_title_2" width="5%"><div align="center">手续费收取类型</div>
+							</td>
+							<td class="left_title_2" width="5%"><div align="center">手续费</div>
+							</td>
+							<td class="left_title_2" width="7%"><div align="center">交易开始时间</div>
+							</td>
+							<td class="left_title_2" width="7%"><div align="center">交易结束时间</div>
+							</td>
+							<td class="left_title_2" width="5%"><div align="center">处理状态</div>
+							</td>
+							<td class="left_title_2" width="6%"><div align="center">结算标志</div>
+							</td>
+							<td class="left_title_2" width="9%"><div align="center">商户类型</div>
+							</td>
+						</tr>
+						<!--<c:if test="${fn:length(tradeRecordList) == 0}">-->
+							<!--<tr>-->
+								<!--<td colspan="13" class="noResult"><fmt:message-->
+										<!--key="common.noSearchResult" />-->
+								<!--</td>-->
+							<!--</tr>-->
+						<!--</c:if>-->
+							<tr th:each="tr : ${tradeRecordList}" onmouseover="mouseoverRow(this)" onmouseout="mouseoutRow2(this)" style="background-color: #FFFFFF">
+								<td style="text-align: left;cursor: pointer;color: #73938E;"  onclick="openInfo('/Admin/merchantManage/merchantManageAction_toShow?merCode=${tradeRecord.tradeProcess}')">
+									<div align="center" ></div>
+								</td>
+								<td>
+									<div align="center" ></div>
+								</td>
+								<td th:title="${tr.bizTypeName}" align="center" class="clip" th:text="${tr.bizTypeName}">
+								</td>
+								<td title="点击查看交易记录详细信息" align="center">
+								<a th:href="#" onclick="opentrade('tradeQueryAction_detail?id=${tr.id}')" th:text="${tr.orderId}"></a>
+								</td>
+								<td>
+									<div align="center" th:text="${tr.bankSn}"></div>
+								</td>
+								<td title="${tr.tradeTypeName}" class="clip" align="center" th:text="${tr.tradeTypeName}">
+
+								</td>
+								<td>
+									<div align="center" th:text="${tr.bankName}"></div>
+								</td>
+								<td><div align="right" th:text="${tr.tradeSum}">
+
+									</div>
+								</td>
+								<td><div align="right" th:text="${tr.chargeType}">
+										<!--<c:if test="${tradeRecord.chargeType eq 0}">实时</c:if>
+										<c:if test="${tradeRecord.chargeType eq 1}">预付</c:if>		
+										<c:if test="${tradeRecord.chargeType eq 2}">垫付</c:if>		
+										<c:if test="${tradeRecord.chargeType eq 3}">后付</c:if>	-->
+									</div>
+								</td>
+								<td>
+									<div align="right" th:text="${tradeRecord.tradeSum}">
+										<!--<c:if test="${fn:substring(tradeRecord.tradeCode, 0, 2) == 'ZF' || tradeRecord.tradeCode == 'TZ0001' || fn:substring(tradeRecord.tradeCode, 0, 2) == 'DK' || tradeRecord.tradeCode == 'DJ0005' || tradeRecord.tradeCode == 'DJ0006'}">
+											<fmt:formatNumber value="${tradeRecord.tradeSum - tradeRecord.merFund}" type="currency" pattern="#0.00" />
+										</c:if>
+										<c:if test="${fn:substring(tradeRecord.tradeCode, 0, 2) == 'SF' || tradeRecord.tradeCode == 'PF1002' || tradeRecord.tradeCode == 'PF1005' || tradeRecord.tradeCode == 'CZ1101'}">
+											<fmt:formatNumber value="${tradeRecord.tradeSum - tradeRecord.fld5}" type="currency" pattern="#0.00" />
+										</c:if>
+										<c:if test="${tradeRecord.tradeCode == 'TX1002'}">
+											<fmt:formatNumber value="${tradeRecord.fld5 - tradeRecord.tradeSum}" type="currency" pattern="#0.00" />
+										</c:if> -->
+											<!--<fmt:formatNumber value="${tradeRecord.tradeFee}" type="currency" pattern="#0.00"></fmt:formatNumber>	-->
+									</div>
+								</td>
+								<td><div align="center">
+										<!--<fmt:formatDate value="${tradeRecord.tradeStartTime}"
+											pattern="yyyy-MM-dd HH:mm:ss" />-->
+									</div>
+								</td>
+								<td><div align="center">
+										<!--<fmt:formatDate value="${tradeRecord.tradeEndTime}"
+											pattern="yyyy-MM-dd HH:mm:ss" />-->
+									</div>
+								</td>
+								<td><div align="center">
+										<!--<c:if test="${0 eq tradeRecord.status}">待处理</c:if>
+										<c:if test="${1 eq tradeRecord.status}">处理中</c:if>
+										<c:if test="${2 eq tradeRecord.status}">成功</c:if>
+										<c:if test="${3 eq tradeRecord.status}">失败</c:if>
+										<c:if test="${4 eq tradeRecord.status}">待确认</c:if>-->
+									</div>
+								</td>
+								<td><div align="center">
+										<!--<c:choose>
+											<c:when test="${1 eq tradeRecord.settlementStatus}">已结算</c:when>
+											<c:otherwise>未结算</c:otherwise>
+										</c:choose>-->
+									</div>
+								</td>
+								<td><div align="center">
+										<!--<c:if test="${0 eq tradeRecord.fld12}">普通商户</c:if>
+										<c:if test="${1 eq tradeRecord.fld12}">P2P托管商户</c:if>
+										<c:if test="${2 eq tradeRecord.fld12}">徽商存管商户</c:if>
+										<c:if test="${3 eq tradeRecord.fld12}">账户托管商户</c:if>
+										<c:if test="${4 eq tradeRecord.fld12}">晋城存管商户</c:if>
+										<c:if test="${5 eq tradeRecord.fld12}">众邦存管商户</c:if>-->
+									</div>
+								</td>
+							</tr>
+					</table>
+				</td>
+			</tr>
+			<tr style="display: ${init_flg}">
+				<td>
+					<div style="width: auto; float: left">
+						<a href="#" onclick="excel(0,0,0)"
+							onmouseout="MM_swapImgRestore()"
+							onmouseover="MM_swapImage('ImageExcel','','${request_path}/images/dc_excel_focus.gif',1)">
+							<img src="${request_path}/images/dc_excel.gif" name="ImageExcel"
+							width="65" height="21" border="0" id="ImageExcel" align="middle" />
+						</a>
+					</div>
+					<div style="width: auto; float: right">
+					</div></td>
+			</tr>
+		</table>
+		<div id="messagebox"
+			style="display: none; text-align: center; padding-top: 10px;">
+		</div>
+	</form>
+</body>
+</html>

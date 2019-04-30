@@ -1,0 +1,12 @@
+.allkbdiv {
+	position:absolute;display:none;background-image:url("../images/allkb/allkbBg.jpg");left:0px;top:0px;width:484px;height:207px;z-index:5;overflow:visible;text-align:center;
+}
+.letter_normal{
+	position:absolute;width: 44px;height: 44px;background-image: url("../images/allkb/letter_normal.png");line-height: 44px;font-size: 24px;font-weight: bolder;color: white;text-align: center;
+}
+.lettet_focus{
+	position:absolute;width: 44px;height: 44px;background-image: url("../images/allkb/letter_focus.png");line-height: 44px;font-size: 24px;font-weight: bolder;color: white;text-align: center;
+}
+.other{
+	position: absolute;width: 65px;height: 44px;
+}
