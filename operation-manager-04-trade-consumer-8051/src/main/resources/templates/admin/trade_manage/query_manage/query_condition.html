@@ -601,25 +601,25 @@
 								<td>
 									<div align="center" ></div>
 								</td>
-								<td th:title="${tr.bizTypeName}" align="center" class="clip" th:text="${tr.bizTypeName}">
+								<td th:title="${tr.tradeCode}" align="center" class="clip" th:text="${tr.tradeCode}">
 								</td>
 								<td title="点击查看交易记录详细信息" align="center">
-								<a th:href="#" onclick="opentrade('tradeQueryAction_detail?id=${tr.id}')" th:text="${tr.orderId}"></a>
+								<a th:href="#" onclick="opentrade('tradeQueryAction_detail?id=${tr.id}')" ></a>
 								</td>
 								<td>
-									<div align="center" th:text="${tr.bankSn}"></div>
+									<div align="center" ></div>
 								</td>
-								<td title="${tr.tradeTypeName}" class="clip" align="center" th:text="${tr.tradeTypeName}">
+								<td title="${tr.tradeTypeName}" class="clip" align="center" >
 
 								</td>
 								<td>
-									<div align="center" th:text="${tr.bankName}"></div>
+									<div align="center" ></div>
 								</td>
-								<td><div align="right" th:text="${tr.tradeSum}">
+								<td><div align="right" >
 
 									</div>
 								</td>
-								<td><div align="right" th:text="${tr.chargeType}">
+								<td><div align="right" >
 										<!--<c:if test="${tradeRecord.chargeType eq 0}">实时</c:if>
 										<c:if test="${tradeRecord.chargeType eq 1}">预付</c:if>		
 										<c:if test="${tradeRecord.chargeType eq 2}">垫付</c:if>		
@@ -627,7 +627,7 @@
 									</div>
 								</td>
 								<td>
-									<div align="right" th:text="${tradeRecord.tradeSum}">
+									<div align="right" >
 										<!--<c:if test="${fn:substring(tradeRecord.tradeCode, 0, 2) == 'ZF' || tradeRecord.tradeCode == 'TZ0001' || fn:substring(tradeRecord.tradeCode, 0, 2) == 'DK' || tradeRecord.tradeCode == 'DJ0005' || tradeRecord.tradeCode == 'DJ0006'}">
 											<fmt:formatNumber value="${tradeRecord.tradeSum - tradeRecord.merFund}" type="currency" pattern="#0.00" />
 										</c:if>

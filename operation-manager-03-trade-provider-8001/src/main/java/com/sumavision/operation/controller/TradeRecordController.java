@@ -1,7 +1,5 @@
 package com.sumavision.operation.controller;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.sumavision.operation.entities.TradeRecord;
 import com.sumavision.operation.service.TradeService;
 import org.springframework.beans.factory.annotation.Autowired;
